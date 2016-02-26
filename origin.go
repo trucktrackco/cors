@@ -1,7 +1,6 @@
 package cors
 
 import (
-	"config"
 	"fmt"
 	"log"
 	"net/http"
@@ -9,16 +8,16 @@ import (
 	"time"
 )
 
-func Origin(h http.HandlerFunc) http.HandlerFunc {
+func Origin(env string, h http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		origin := r.Header.Get("Origin")
 		if origin != "" {
-			if strings.Index(origin, "http://") != -1 && (config.Get("env") == "dev") {
+			if strings.Index(origin, "http://") == -1 && (env == "dev") {
 				log.Println("Dev environment detected", origin)
 				origin = "http://" + origin
 			}
 
-			if strings.Index(origin, "https://") == -1 && (config.Get("env") == "stage" || config.Get("env") == "prod") {
+			if strings.Index(origin, "https://") == -1 && (env == "stage" || env == "prod") {
 				log.Println("Stage/prod environment detected", origin)
 				origin = "https://" + origin
 			}
