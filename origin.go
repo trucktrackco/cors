@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func origin(h http.HandlerFunc) http.HandlerFunc {
+func Origin(h http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		origin := r.Header.Get("Origin")
 		if origin != "" {
