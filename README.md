@@ -1,0 +1,2 @@
+# cors
+simple cors filter
